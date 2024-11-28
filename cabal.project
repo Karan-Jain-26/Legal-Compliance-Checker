@@ -1,0 +1,93 @@
+-- cabal.project
+cabal-version: 2.4
+
+-- This is the main configuration file for the project.
+-- You can specify the packages you want to work with and configure their dependencies.
+
+packages:
+  .               -- Refers to the current directory, which contains your Haskell project files.
+  ./src           -- Include any Haskell code files from the src folder
+  ./test          -- Include the test folder for unit tests
+  ./lib           -- Include the lib folder for additional Haskell libraries (if used)
+
+-- Set the default project for building (e.g., the executable or library).
+default-package: legal-compliance-checker
+
+-- Setup the package configurations for the project
+package legal-compliance-checker
+  -- Specify the library or executable name
+  executables:
+    legal-compliance-checker-exe:
+      main: Main.hs
+      -- Include the necessary directories for your project
+      source-dirs: src
+      ghc-options: -Wall
+
+  -- Define dependencies for the executable
+  build-depends:
+    base >= 4.14 && < 5
+    , containers
+    , text
+    , directory
+    , filepath
+    , time
+    , aeson
+    , transformers
+    , mtl
+    , lens
+    , HUnit
+    , QuickCheck
+    , text-show
+
+  -- Enable testing for the project
+  test-suite legal-compliance-checker-test
+    type: exitcode-stdio-1.0
+    main: TestMain.hs
+    source-dirs: test
+    ghc-options: -Wall
+    build-depends:
+      , base >= 4.14 && < 5
+      , containers
+      , text
+      , directory
+      , filepath
+      , time
+      , aeson
+      , transformers
+      , mtl
+      , lens
+      , HUnit
+      , QuickCheck
+
+  -- You can configure additional libraries and modules if needed
+  library:
+    legal-compliance-checker-lib:
+      exposed-modules:
+        Legal.Compliance
+        Legal.Validator
+        Legal.Rule
+        Legal.Log
+        Legal.State
+        Legal.API
+      source-dirs: src
+      build-depends:
+        , base >= 4.14 && < 5
+        , containers
+        , text
+        , aeson
+        , mtl
+        , transformers
+        , lens
+
+-- Additional flags and configurations for the project (if needed)
+flags:
+  build-tests: true
+
+-- Specify compiler settings if necessary
+compiler: ghc-8.10.4
+
+-- Specify the source directory for your dependencies
+source-repository-package
+  type: git
+  location: https://github.com/yourusername/legal-compliance-checker.git
+  tag: v1.0.0
