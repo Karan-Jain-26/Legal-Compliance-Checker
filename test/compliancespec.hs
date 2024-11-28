@@ -1,7 +1,7 @@
 module ComplianceSpec where
 
 import Test.HUnit
-import Complianc
+import Compliance
 import Types
 import State
 import Utils
